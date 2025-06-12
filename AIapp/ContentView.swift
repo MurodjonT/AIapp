@@ -11,8 +11,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var email = ""
-     @State private var password = ""
-     @State private var isSecured = true
+    @State private var password = ""
+    @State private var isSecured = true
     var body: some View {
         
         ScrollView {
@@ -23,24 +23,24 @@ struct ContentView: View {
                 Text("  IMAGINE \nWITH AIKO")
                     .font(.system(size: 50))
                 
-             
-                CustomTextField(
-                        title: "Email address",
-                        text: $email,
-                        keyboardType: .emailAddress
-                    )
                 
                 CustomTextField(
-                        title: "Password",
-                        text: $password,
-                        keyboardType: .default
-                    )
-                    .padding(.top, 20)
+                    title: "Email address",
+                    text: $email,
+                    keyboardType: .emailAddress
+                )
+                
+                CustomTextField(
+                    title: "Password",
+                    text: $password,
+                    keyboardType: .default
+                )
+                .padding(.top, 20)
                 
                 HStack {
                     Spacer()
                     Button(action: {
-                    
+                        
                     }) {
                         Text("Forgot Password?")
                             .font(.footnote)
@@ -51,18 +51,43 @@ struct ContentView: View {
                 
                 MainButton("Create") {
                 }
+                .disabled(email.isEmpty || password.isEmpty)
                 .padding(.top)
                 
                 Divider()
                     .padding([.top, .bottom], 20)
-                    
                 
-                SignUpButton("Sign up with Google") {
+                
+                SignUpButton("Sign up with Google", "Google Logo") {
+                    
                 }
                 
+                SignUpButton("Sign up with Apple", "Apple  Logo") {
+                    
+                }
+                .padding(.top, 20)
                 
+                HStack(spacing: 40) {
+                    Button(action: {
+                        
+                    }) {
+                        Text("Privacy Policy")
+                            .font(.footnote)
+                            .foregroundColor(.black)
+                    }
+                    
+                    Button(action: {
+                        
+                    }) {
+                        Text("Terms of Service")
+                            .font(.footnote)
+                            .foregroundColor(.black)
+                    }
+                }
+                .padding(.top, 20)
+
             }
-            .padding(EdgeInsets(top: 10, leading: 30, bottom: 0, trailing: 30))
+            .padding(.horizontal, 30)
         }
     }
 }
@@ -72,29 +97,3 @@ struct ContentView: View {
 }
 
 
-
-struct SignUpButton: View {
-    var titleKey: LocalizedStringKey
-    var action: () -> Void
-    
-    init(_ titleKey: LocalizedStringKey, action: @escaping () -> Void) {
-        self.titleKey = titleKey
-        self.action = action
-    }
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                Text(titleKey)
-                Image(systemName: "Google Logo")
- 
-            }
-            .padding(.vertical, 8)
-            .frame(maxWidth: .infinity)
-            
-        }
-        .buttonStyle(.borderedProminent)
-        .foregroundStyle(Color.white)
-        .clipShape(.rect(cornerRadius: 12))
-    }
-}
