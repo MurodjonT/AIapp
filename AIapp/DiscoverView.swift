@@ -125,11 +125,35 @@ struct DiscoverView: View {
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 15)
-                
+                VStack(alignment: .leading) {
+                    ForEach(0..<3) { _ in
+                        
+                        HStack(alignment: .top, spacing: 16) {
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 70, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("AI Assistant")
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(.primary)
+                                
+                                Text("Get help with your tasks and questions using AI.")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(2)
+                            }
+                            Spacer()
+                        }
+//                        .border(Color.gray.opacit y(0.2), width: 1)
+                        .padding(.leading, 15)}
+                }
             }
         }
     }
 }
+
 
 #Preview {
     DiscoverView()
