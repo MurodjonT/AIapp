@@ -13,142 +13,112 @@ struct DiscoverView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                ZStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 16) {
-                        
-                        Button("Productivity") {
-                            
-                        }
-                        Rectangle()
-                            .frame(width: 0.5, height: 24)
-                                    .foregroundColor(.gray)
-                        Button("Top Picks") {
-                           
-                        }
-                        Rectangle()
-                            .frame(width: 0.5, height: 24)
-                                    .foregroundColor(.gray)
-                        Button("LifeStyle") {
-                           
-                        }
-                        Rectangle()
-                            .frame(width: 0.5, height: 24)
-                                    .foregroundColor(.gray)
-                        Button("Education") {
-                            
-                        }
-                    }
-                    .padding(.leading, 15)
-                    .foregroundColor(.primary)
-                    .font(.system(size: 15))
-                }
-                   
-                    HStack {
-                
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                    .frame(width: 90)
-                
-                                    Spacer()
-                
-                
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.white.opacity(0), Color.white]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                    .frame(width: 90)
-                                }
-            
-            }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            // Action for the button
-                        }) {
-                            Image("More Circle")
-                                .foregroundColor(.primary)
-                                .frame(width: 34, height: 34)
-                        }
-                    }
-                    ToolbarItem(placement: .principal) {
-                        Text("Discover")
-                            .font(.system(size: 30, weight: .bold))
-                            .foregroundColor(.primary)
-                    }
+                VStack {
+                    TopPickerView()
+                    FeaturedView()
                     
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            // Action for the button
-                        }) {
-                            Image("Side Menu")
-                                .frame(width: 34, height: 34)
-                                .foregroundColor(.primary)
-                        }
-                    }
                 }
+            }
+            .safeAreaPadding(.vertical, 32)
+            .navigationTitle("Discover")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: ToolbarContent)
+        }
+    }
+    
+    @ViewBuilder func TopPickerView() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 16) {
+                Button("Productivity") {
+                    
+                }
+                Divider()
+                Button("Top Picks") {
+                    
+                }
+                Divider()
+                Button("LifeStyle") {
+                    
+                }
+                Divider()
+                Button("Education") {
+                    
+                }
+            }
+            .padding(.leading, 15)
+            .foregroundColor(.primary)
+            .font(.system(size: 15))
+        }
+        .overlay {
+            LinearGradient(
+                stops: [
+                    Gradient.Stop(color: Color(.systemBackground), location: 0),
+                    Gradient.Stop(color: Color.clear, location: 0.2),
+                    Gradient.Stop(color: Color.clear, location: 0.8),
+                    Gradient.Stop(color: Color(.systemBackground), location: 1),
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .allowsHitTesting(false)
+        }
+    }
+    
+    @ViewBuilder func FeaturedView() -> some View {
+        TitleView("Featured") {
+            
+        }
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 10) {
+                ForEach(0..<6) { _ in
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 150, height: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .scrollIndicators(.hidden)
+        .safeAreaPadding(.horizontal, 20)
+    }
+    
+    
+    @ViewBuilder func TitleView(_ title: LocalizedStringKey, action: @MainActor @escaping () -> ()) -> some View {
+        Button(action: action) {
+            HStack {
+                Text(title)
+                    .font(.largeTitle)
+                    .foregroundColor(Color.secondary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .foregroundColor(Color.gray.opacity(0.5))
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 15, height: 15)
+                    .fontWeight(.bold)
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 10)
+        }
+        
+    }
+    
+    @ToolbarContentBuilder func ToolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button("Sidebar", systemImage: "line.2.horizontal.decrease.circle.fill") {
                 
-                HStack {
-                    Text("Featured")
-                        .font(.system(size: 35, weight: .bold))
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .frame(width: 30, height: 30)
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 15)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 10) {
-                        ForEach(0..<6) { _ in
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 150, height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                                
-                                
-                        }
-                    }
-                    .padding(.leading, 15)
-                }
-                
-                HStack {
-                    Text("Trending")
-                        .font(.system(size: 35, weight: .bold))
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .frame(width: 30, height: 30)
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 15)
-                VStack(alignment: .leading) {
-                    ForEach(0..<3) { _ in
-                        
-                        HStack(alignment: .top, spacing: 16) {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("AI Assistant")
-                                    .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(.primary)
-                                
-                                Text("Get help with your tasks and questions using AI.")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.secondary)
-                                    .lineLimit(2)
-                            }
-                            Spacer()
-                        }
-//                        .border(Color.gray.opacit y(0.2), width: 1)
-                        .padding(.leading, 15)}
-                }
+            }
+        }
+        ToolbarItem(placement: .principal) {
+            Text("Discover")
+                .font(.system(.title, design: .rounded, weight: .bold))
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu("More", systemImage: "ellipsis.circle.fill") {
+                Button("Settings", systemImage: "gearshape.fill") {}
+                Button("Share", systemImage: "square.and.arrow.up") {}
             }
         }
     }
