@@ -7,26 +7,24 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    let title: String
+    
+    let title: LocalizedStringKey
     @Binding var text: String
-    var keyboardType: UIKeyboardType = .default
+ 
+    init(_ title: LocalizedStringKey, text: Binding<String>) {
+        self.title = title
+        _text = text
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
             TextField(title, text: $text)
-                .keyboardType(keyboardType)
+                .autocorrectionDisabled(true)
                 .autocapitalization(.none)
-                .disableAutocorrection(true)
-                
-             
-
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .cornerRadius(12)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color(.systemGray4), lineWidth: 1)
-            )
+                .padding(12)
+                .background {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.background)
+                        .stroke(.separator)
+                }
         }
     }
-}

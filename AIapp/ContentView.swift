@@ -47,18 +47,9 @@ struct ContentView: View {
                         .font(.system(size: 50))
                     
                     
-                    CustomTextField(
-                        title: "Email address",
-                        text: $email,
-                        keyboardType: .emailAddress
-                    )
-                    
-                    CustomTextField(
-                        title: "Password",
-                        text: $password,
-                        keyboardType: .default
-                    )
-                    .padding(.top, 20)
+                    CustomTextField("Email address", text: $email)
+                    CustomTextField("Password", text: $password)
+               
                     
                     HStack {
                         Spacer()
@@ -81,11 +72,11 @@ struct ContentView: View {
                         .padding([.top, .bottom], 20)
                     
                     
-                    SignUpButton("Sign up with Google", "Google Logo") {
+                    SignUpButton("Sign up with Google", .googleLogo) {
                         
                     }
                     
-                    SignUpButton("Sign up with Apple", "Apple  Logo") {
+                    SignUpButton("Sign up with Apple", .appleLogo) {
                         
                     }
                     .padding(.top, 20)
@@ -120,8 +111,8 @@ struct ContentView: View {
     }
         
 }
-//#Preview {
-//    ContentView()
-//}
+#Preview {
+    ContentView()
+}
 
 

@@ -7,11 +7,12 @@
 import SwiftUI
 
 struct SignUpButton: View {
+    
     var titleKey: LocalizedStringKey
-    var image: String?
+    var image: ImageResource?
     var action: () -> Void
     
-    init(_ titleKey: LocalizedStringKey, _ image: String? = nil, action: @escaping () -> Void) {
+    init(_ titleKey: LocalizedStringKey, _ image: ImageResource? = nil, action: @escaping () -> Void) {
         self.titleKey = titleKey
         self.action = action
         self.image = image
@@ -21,21 +22,20 @@ struct SignUpButton: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 Text(titleKey)
-                Image(image ?? "")
-                    
- 
+                if let image {
+                    Image(image)
+                }
             }
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
             
             
         }
-
-        .foregroundStyle(Color.black)
-        .clipShape(.rect(cornerRadius: 12))
-        .overlay(
+        .tint(Color.primary)
+        .background {
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.systemGray4), lineWidth: 1)
-            )
+                .fill(.background)
+                .stroke(.separator)
+        }
     }
 }
