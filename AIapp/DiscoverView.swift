@@ -16,6 +16,7 @@ struct DiscoverView: View {
                 VStack {
                     TopPickerView()
                     FeaturedView()
+                    TrendingView()
                     
                 }
             }
@@ -62,6 +63,50 @@ struct DiscoverView: View {
             )
             .allowsHitTesting(false)
         }
+    }
+    
+    @ViewBuilder func TrendingView() -> some View {
+        TitleView("Trending") {
+            
+        }
+        ScrollView(.horizontal) {
+            LazyHStack(spacing: 10) {
+                ForEach(0..<3, id: \.self) { i in
+                    VStack {
+                        ForEach(0..<3, id: \.self) { _ in
+                            AssistentView(i)
+                        }
+                    }
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .scrollIndicators(.hidden)
+        .safeAreaPadding(.horizontal, 20)
+    }
+    
+    @ViewBuilder func AssistentView(_ index: Int) -> some View {
+        var width: CGFloat {
+            let padding: CGFloat = index == 2 ? 40 : 72
+            return  UIScreen.main.bounds.width - padding
+        }
+        HStack(alignment: .top, spacing: 16) {
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(width: 70, height: 70)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("AI Assistant")
+                    .font(.system(.body, weight: .semibold))
+                Text("Get help with your tasks and questions using AI.")
+                    .font(.footnote)
+                    .foregroundStyle(Color.secondary)
+                    .lineLimit(2)
+            }
+        }
+        .frame(maxWidth: width, alignment: .leading)
     }
     
     @ViewBuilder func FeaturedView() -> some View {
