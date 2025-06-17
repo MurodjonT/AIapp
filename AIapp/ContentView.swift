@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
     @State private var email = ""
     @State private var password = ""
@@ -17,100 +15,57 @@ struct ContentView: View {
     
     
     var body: some View {
-        
-        ZStack {
-            RoundedRectangle(cornerRadius: 60)
-                .strokeBorder(
-                    AngularGradient(
-                        colors: [.red, .orange, .yellow, .green, .blue, .purple],
-                        center: .center,
-                        angle: angle
-                    ),
-                    
-                    lineWidth: 7
-                    
-                )
-                .blur(radius: 5)
-                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                .padding(0)
-                .onAppear {
-                    withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
-                        angle = .degrees(360)
-                    }
-                }
+       
             ScrollView {
                 VStack {
-                    Image("CPU 3")
+                    Image(.CPU_3)
                         .frame(width: 75, height: 75)
                         .padding(.top, 55)
-                    Text("  IMAGINE \nWITH AIKO")
+                    Text("IMAGINE \nWITH AIKO")
                         .font(.system(size: 50))
-                    
-                    
-                    CustomTextField("Email address", text: $email)
-                    CustomTextField("Password", text: $password)
-               
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            
-                        }) {
-                            Text("Forgot Password?")
-                                .font(.footnote)
-                                .foregroundColor(.black)
-                        }
-                    }
-                    .padding(.top, 10)
-                    
-                    MainButton("Create") {
-                    }
-//                    .disabled(email.isEmpty || password.isEmpty)
-                    .padding(.top)
-                    
-                    Divider()
-                        .padding([.top, .bottom], 20)
-                    
-                    
-                    SignUpButton("Sign up with Google", .googleLogo) {
+                        .multilineTextAlignment(.center)
+                    VStack(spacing: 20) {
                         
-                    }
-                    
-                    SignUpButton("Sign up with Apple", .appleLogo) {
+                        CustomTextField("Email address", text: $email)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
+                        CustomTextField("Password", text: $password)
+                            .textContentType(.password)
                         
-                    }
-                    .padding(.top, 20)
-                    
-                    HStack(spacing: 40) {
-                        Button(action: {
-                            
-                        }) {
-                            Text("Privacy Policy")
-                                .font(.footnote)
-                                .foregroundColor(.black)
+                        Button("Forgot Password?") {
                         }
+                        .font(.footnote)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .tint(Color.primary)
                         
-                        Button(action: {
-                            
-                        }) {
-                            Text("Terms of Service")
-                                .font(.footnote)
-                                .foregroundColor(.black)
-                        }
+                        MainButton("Create") { }
+                        Divider()
+                        SignUpButton("Sign up with Google", .googleLogo) { }
+                        SignUpButton("Sign up with Apple", .appleLogo) { }
+                        
+                        HStack(spacing: 40) {
+                            Button("Privacy Policy")    { }
+                            Button("Terms of Service")  { }
+                                
+                            }
+                        .font(.footnote)
+                        .tint(Color.primary)
                     }
-                    .padding(.top, 20)
-                    
                 }
                 .padding(.horizontal, 30)
+                .padding(.top, 55)
             }
+            .background(content: BackgroundAnimationView)
+            .background(Color.mainBackground)
+                
             
-        }
-        .ignoresSafeArea()
-        
-        
     }
+    @ViewBuilder func BackgroundAnimationView() -> some View {
+        IntelligenceAnimationBackground()
+    }
+ }
         
-}
+
 #Preview {
     ContentView()
 }
