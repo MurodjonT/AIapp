@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LoginView.swift
 //  AIapp
 //
 //  Created by Murodjon Turobov on 11/06/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isSecured = true
@@ -67,7 +67,7 @@ struct ContentView: View {
         
 
 #Preview {
-    ContentView()
+    LoginView()
 }
 
 
