@@ -17,9 +17,11 @@ struct DiscoverView: View {
                     TopPickerView()
                     FeaturedView()
                     TrendingView()
+
                     
                 }
             }
+            .background(Color.mainBackground)
             .safeAreaPadding(.vertical, 32)
             .navigationTitle("Discover")
             .navigationBarTitleDisplayMode(.inline)
@@ -110,16 +112,42 @@ struct DiscoverView: View {
     }
     
     @ViewBuilder func FeaturedView() -> some View {
+        
+        
         TitleView("Featured") {
             
         }
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 10) {
                 ForEach(0..<6) { _ in
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(width: 150, height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    
+                    VStack(alignment: .leading) {
+                        Image(.swiftUILogo)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50, height: 50)
+                            .padding(5)
+                            .background {
+                                Circle()
+                                    .fill(Color.green.opacity(0.2))
+                                   
+                            }
+                        Text("Coding Tutorials")
+                            .font(.subheadline)
+                            .padding(.top, 12)
+                        Text("Step-by-step guides on popular programming languages like Python, JavaScript, Java, C#, etc.")
+                            .font(.footnote)
+                            .lineLimit(5)
+                            .foregroundStyle(Color.secondary)
+                        
+                    }
+                    .frame(width: 150, height: 200)
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.white)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                    }
                 }
             }
             .scrollTargetLayout()
@@ -127,6 +155,8 @@ struct DiscoverView: View {
         .scrollTargetBehavior(.viewAligned)
         .scrollIndicators(.hidden)
         .safeAreaPadding(.horizontal, 20)
+        .safeAreaPadding(.bottom, 2)
+        
     }
     
     

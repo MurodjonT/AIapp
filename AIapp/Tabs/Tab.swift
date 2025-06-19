@@ -10,12 +10,12 @@ import SwiftUI
 struct Tab: View {
     var body: some View {
         TabView {
-            ContentView()
+            LoginView()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            ContentView()
+            LoginView()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
