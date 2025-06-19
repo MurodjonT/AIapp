@@ -17,8 +17,6 @@ struct DiscoverView: View {
                     TopPickerView()
                     FeaturedView()
                     TrendingView()
-
-                    
                 }
             }
             .background(Color.mainBackground)
@@ -118,38 +116,11 @@ struct DiscoverView: View {
             
         }
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 10) {
-                ForEach(0..<6) { _ in
-                    
-                    VStack(alignment: .leading) {
-                        Image(.swiftUILogo)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 50, height: 50)
-                            .padding(5)
-                            .background {
-                                Circle()
-                                    .fill(Color.green.opacity(0.2))
-                                   
-                            }
-                        Text("Coding Tutorials")
-                            .font(.subheadline)
-                            .padding(.top, 12)
-                        Text("Step-by-step guides on popular programming languages like Python, JavaScript, Java, C#, etc.")
-                            .font(.footnote)
-                            .lineLimit(5)
-                            .foregroundStyle(Color.secondary)
-                        
-                    }
-                    .frame(width: 150, height: 200)
-                    .padding()
-                    .background {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white)
-                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                    }
-                }
-            }
+                   LazyHStack(spacing: 20) {
+                       ForEach(FeaturedItem.sampleData) { item in
+                           FeaturedCardView(item: item)
+                       }
+                   }
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.viewAligned)
@@ -157,6 +128,35 @@ struct DiscoverView: View {
         .safeAreaPadding(.horizontal, 20)
         .safeAreaPadding(.bottom, 2)
         
+    }
+    
+    struct FeaturedCardView: View {
+        let item: FeaturedItem
+        
+        var body: some View {
+            VStack(alignment: .leading) {
+                Image(item.imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    
+                Text(item.title)
+                    .font(.subheadline)
+                    .padding(.top, 16)
+                
+                Text(item.description)
+                    .font(.footnote)
+                    .lineLimit(5)
+                    .foregroundStyle(Color.secondary)
+            }
+            .frame(width: 150, height: 200, alignment: .top)
+            .padding()
+            .background {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+            }
+        }
     }
     
     
