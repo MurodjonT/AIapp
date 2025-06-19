@@ -66,41 +66,44 @@ struct DiscoverView: View {
     }
     
     @ViewBuilder func TrendingView() -> some View {
-        TitleView("Trending") {
+        VStack(alignment: .leading, spacing: 16) {
+            TitleView("Trending") {
+                // Action if needed
+            }
             
-        }
-        ScrollView(.horizontal) {
-            LazyHStack(spacing: 10) {
-                ForEach(0..<3, id: \.self) { i in
-                    VStack {
-                        ForEach(0..<3, id: \.self) { _ in
-                            AssistentView(i)
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 10) {
+                    ForEach(Array(stride(from: 0, to: TrendingItem.sampleData.count, by: 3)), id: \.self) { index in
+                        VStack(spacing: 10) {
+                            ForEach(Array(TrendingItem.sampleData[index..<min(index+3, TrendingItem.sampleData.count)])) { item in
+                                TrendingAssistentView(item: item, isLastColumn: index >= TrendingItem.sampleData.count - 3)
+                            }
                         }
                     }
                 }
+                .scrollTargetLayout()
             }
-            .scrollTargetLayout()
+            .scrollTargetBehavior(.viewAligned)
+            .scrollIndicators(.hidden)
+            .safeAreaPadding(.horizontal, 20)
         }
-        .scrollTargetBehavior(.viewAligned)
-        .scrollIndicators(.hidden)
-        .safeAreaPadding(.horizontal, 20)
     }
-    
-    @ViewBuilder func AssistentView(_ index: Int) -> some View {
-        var width: CGFloat {
-            let padding: CGFloat = index == 2 ? 40 : 72
-            return  UIScreen.main.bounds.width - padding
-        }
+
+    @ViewBuilder func TrendingAssistentView(item: TrendingItem, isLastColumn: Bool) -> some View {
+        let padding: CGFloat = isLastColumn ? 40 : 72
+        let width = UIScreen.main.bounds.width - padding
+        
         HStack(alignment: .top, spacing: 16) {
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
+            Image(item.imageName)
+                .resizable()
+                .scaledToFill()
                 .frame(width: 70, height: 70)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("AI Assistant")
+                Text(item.title)
                     .font(.system(.body, weight: .semibold))
-                Text("Get help with your tasks and questions using AI.")
+                Text(item.description)
                     .font(.footnote)
                     .foregroundStyle(Color.secondary)
                     .lineLimit(2)
@@ -108,7 +111,6 @@ struct DiscoverView: View {
         }
         .frame(maxWidth: width, alignment: .leading)
     }
-    
     @ViewBuilder func FeaturedView() -> some View {
         
         
@@ -177,7 +179,6 @@ struct DiscoverView: View {
             .padding(.leading, 20)
             .padding(.trailing, 10)
         }
-        
     }
     
     @ToolbarContentBuilder func ToolbarContent() -> some ToolbarContent {
