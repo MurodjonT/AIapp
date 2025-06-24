@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DiscoverView: View {
     
-    
+    @State private var showLoginView = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -19,11 +20,16 @@ struct DiscoverView: View {
                     TrendingView()
                 }
             }
+            .navigationDestination(isPresented: $showLoginView) {
+                     LoginView()
+                 }
             .background(Color.mainBackground)
             .safeAreaPadding(.vertical, 32)
             .navigationTitle("Discover")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: ToolbarContent)
+            .navigationBarBackButtonHidden(true)
+
         }
     }
     
@@ -195,11 +201,13 @@ struct DiscoverView: View {
             Menu("More", systemImage: "ellipsis.circle.fill") {
                 Button("Settings", systemImage: "gearshape.fill") {}
                 Button("Share", systemImage: "square.and.arrow.up") {}
+                Button("Log out", systemImage: "arrow.right.circle.fill") {
+                    showLoginView = true
+                    }
+                }
             }
         }
     }
-}
-
 
 #Preview {
     DiscoverView()

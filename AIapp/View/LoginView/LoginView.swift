@@ -11,11 +11,12 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isSecured = true
-    @State private var angle: Angle = .zero
-    
+    @State private var isShowingDiscoverView = false
+
     
     var body: some View {
-       
+        
+        NavigationStack {
             ScrollView {
                 VStack {
                     Image(.CPU_3)
@@ -38,7 +39,13 @@ struct LoginView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .tint(Color.primary)
                         
-                        MainButton("Create") { }
+                        MainButton("Create") {
+                           isShowingDiscoverView = true
+                        }
+                            .navigationDestination(isPresented: $isShowingDiscoverView) {
+                                                   DiscoverView()
+                            
+                        }
                         Divider()
                         SignUpButton("Sign up with Google", .googleLogo) { }
                         SignUpButton("Sign up with Apple", .appleLogo) { }
@@ -46,8 +53,8 @@ struct LoginView: View {
                         HStack(spacing: 40) {
                             Button("Privacy Policy")    { }
                             Button("Terms of Service")  { }
-                                
-                            }
+                            
+                        }
                         .font(.footnote)
                         .tint(Color.primary)
                     }
@@ -57,9 +64,12 @@ struct LoginView: View {
             }
             .background(content: BackgroundAnimationView)
             .background(Color.mainBackground)
-                
-            
-    }
+          
+            }
+        .navigationBarBackButtonHidden(true)
+
+        }
+    
     @ViewBuilder func BackgroundAnimationView() -> some View {
         IntelligenceAnimationBackground()
     }
