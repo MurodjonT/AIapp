@@ -11,6 +11,7 @@ struct DiscoverView: View {
     
     @State private var isTopPickerScrolling: Bool = false
     @State private var showLoginView = false
+    @State private var showAikoView = false
 
     var body: some View {
         NavigationStack {
@@ -23,6 +24,9 @@ struct DiscoverView: View {
             }
             .navigationDestination(isPresented: $showLoginView) {
                          LoginView()
+                     }
+            .navigationDestination(isPresented: $showAikoView) {
+                         AikoView()
                      }
             .background(Color.mainBackground)
             .safeAreaPadding(.vertical, 32)
@@ -202,7 +206,9 @@ struct DiscoverView: View {
         ToolbarItem(placement: .topBarTrailing) {
             Menu("More", systemImage: "ellipsis.circle.fill") {
                 Button("Settings", systemImage: "gearshape.fill") {}
-                Button("Share", systemImage: "square.and.arrow.up") {}
+                Button("AIKO", systemImage: "square.and.arrow.up") {
+                    showAikoView = true
+                }
                 Button("Logout", systemImage: "arrow.right.circle.fill") {
                     showLoginView = true
                 }
