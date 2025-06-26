@@ -43,7 +43,7 @@ struct LoginView: View {
                            isShowingDiscoverView = true
                         }
                             .navigationDestination(isPresented: $isShowingDiscoverView) {
-                                                   DiscoverView()
+                                DiscoverView()
                             
                         }
                         Divider()
